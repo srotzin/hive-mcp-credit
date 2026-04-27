@@ -1,0 +1,110 @@
+        # Smithery Registry — HiveCredit MCP Server
+        # https://smithery.ai
+        # Backend status: v0.1 — pending hivemorph backend build (Q3 2026 spec)
+
+        startCommand:
+          type: http
+          configSchema:
+            type: object
+            properties: {}
+            required: []
+          url: https://hivemorph.onrender.com/mcp/hive-mcp-credit
+
+        name: hive-mcp-credit
+        displayName: HiveCredit — On-chain credit scoring and agent-to-agent lending with counterparty risk tracking
+        version: "1.0.0"
+        description: >
+          MCP server for the Hive Credit platform. Agents retrieve on-chain credit scores (0-100) for any DID or wallet address, request agent-to-agent loans with USDC settlement, record repayments via transaction hash, and query default status. Counterparty risk and repayment history are tracked on-chain. Backend build is Q3 2026. Tool calls currently return HTTP 503 with a feature-gating response — no mock data is ever returned. Submit interest via hive-mcp-connector.
+
+        author:
+          name: Steve Rotzin
+          email: steve@thehiveryiq.com
+          url: https://www.thehiveryiq.com
+
+        license: MIT
+        homepage: https://github.com/srotzin/hive-mcp-credit
+        repository:
+          type: git
+          url: https://github.com/srotzin/hive-mcp-credit
+
+        transport: streamable-http
+        endpoint: https://hivemorph.onrender.com/mcp
+        protocol: "2024-11-05"
+
+        categories:
+          - credit
+  - finance
+  - agent-to-agent
+  - web3
+  - defi
+  - lending
+
+        tags:
+          - mcp
+  - hive
+  - credit
+  - lending
+  - usdc
+  - base-l2
+  - a2a
+  - credit-score
+  - defi
+  - ai-agents
+
+        tools:
+              - name: get_score
+        description: >
+          Retrieve the on-chain credit score (0-100) for a given DID or wallet address. Factors include repayment history, on-chain activity, and Hive trust graph. Backend pending (Q3 2026).
+        inputs:
+          - name: did_or_address
+type: string
+required: true
+description: "DID or wallet address to score"
+        - name: request_loan
+          description: >
+            Request an agent-to-agent loan. Returns a loan quote including APR, required collateral, and settlement currency. Settlement in USDC on Base, Ethereum, or Solana. Backend pending (Q3 2026).
+          inputs:
+            - name: borrower_did
+  type: string
+  required: true
+  description: "DID of the borrowing agent"
+- name: amount_usd
+  type: number
+  required: true
+  description: "Loan amount in USD"
+- name: term_days
+  type: number
+  required: true
+  description: "Loan term in days"
+        - name: repay
+          description: >
+            Record a repayment for an active loan by submitting the on-chain transaction hash. Updates credit score upon confirmation. Backend pending (Q3 2026).
+          inputs:
+            - name: loan_id
+  type: string
+  required: true
+  description: "Loan ID from request_loan"
+- name: tx_hash
+  type: string
+  required: true
+  description: "On-chain transaction hash for the repayment"
+      - name: default_oracle
+        description: >
+          Query whether a loan has been flagged as defaulted by the Hive credit oracle. Returns boolean. Backend pending (Q3 2026).
+        inputs:
+          - name: loan_id
+type: string
+required: true
+description: "Loan ID to check for default status"
+
+        runtime:
+          type: node
+          version: ">=18"
+          command: node server.js
+          env:
+            - name: PORT
+              default: "3000"
+              required: false
+            - name: HIVE_BASE
+              default: "https://hivemorph.onrender.com"
+              required: false

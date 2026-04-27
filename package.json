@@ -1,0 +1,39 @@
+{
+  "name": "hive-mcp-credit",
+  "version": "1.0.0",
+  "description": "MCP server for the Hive Credit platform. Agents retrieve on-chain credit scores (0-100) for any DID or wallet address, request agent-to-agent loans with USDC settlement, record repayments via transact",
+  "type": "module",
+  "main": "server.js",
+  "bin": {
+    "hive-mcp-credit": "./server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "mcp",
+    "hive",
+    "credit",
+    "lending",
+    "usdc",
+    "base-l2",
+    "a2a",
+    "credit-score",
+    "defi",
+    "ai-agents"
+  ],
+  "author": "Steve Rotzin <steve@thehiveryiq.com> (https://www.thehiveryiq.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/srotzin/hive-mcp-credit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/srotzin/hive-mcp-credit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
