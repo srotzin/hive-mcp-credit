@@ -78,7 +78,7 @@ const SERVICE_CFG = {
   tagline: "Undercollateralized credit lines for autonomous agents based on trust scoring.",
   description: "MCP server for HiveCredit \u2014 undercollateralized agent credit and lending on the Hive Civilization. Score \u2192 credit line for autonomous agents. Brokering layer today; lender-of-record partner pending. USDC settlement on Base L2. Real rails.",
   keywords: ["mcp", "model-context-protocol", "x402", "agentic", "ai-agent", "ai-agents", "llm", "hive", "hive-civilization", "credit", "lending", "undercollateralized-credit", "agent-credit", "trust-scoring", "usdc", "base", "base-l2", "agent-economy", "a2a"],
-  externalUrl: "https://hive-mcp-gateway.onrender.com/credit",
+  externalUrl: "https://hive-mcp-credit.onrender.com",
   gatewayMount: "/credit",
   version: "1.0.1",
   pricing: [
