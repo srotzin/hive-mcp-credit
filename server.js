@@ -170,6 +170,81 @@ app.get('/.well-known/security.txt', (req, res) => {
   res.type('text/plain').send(renderSecurity());
 });
 app.get('/seo.json', (req, res) => res.json(seoJson(SERVICE_CFG)));
+
+// ─── Schema discoverability ────────────────────────────────────────────────
+const AGENT_CARD = {
+  name: SERVICE,
+  description: 'MCP server for HiveCredit — undercollateralized agent credit and lending. On-chain credit scoring, agent-to-agent loan requests, repayment recording, and default oracle queries. USDC settlement on Base L2. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
+  url: `https://${SERVICE}.onrender.com`,
+  provider: {
+    organization: 'Hive Civilization',
+    url: 'https://www.thehiveryiq.com',
+    contact: 'steve@thehiveryiq.com',
+  },
+  version: VERSION,
+  capabilities: {
+    streaming: false,
+    pushNotifications: false,
+    stateTransitionHistory: false,
+  },
+  authentication: {
+    schemes: ['x402'],
+    credentials: {
+      type: 'x402',
+      asset: 'USDC',
+      network: 'base',
+      asset_address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+      recipient: '0x15184bf50b3d3f52b60434f8942b7d52f2eb436e',
+    },
+  },
+  defaultInputModes: ['application/json'],
+  defaultOutputModes: ['application/json'],
+  skills: [
+    { name: 'get_score', description: 'Retrieve the on-chain credit score (0-100) for a given DID or wallet address. Factors include repayment history, on-chain activity, and Hive trust graph. Backend pending (Q3 2026).' },
+    { name: 'request_loan', description: 'Request an agent-to-agent loan. Returns a loan quote including APR, required collateral, and settlement currency. Settlement in USDC on Base, Ethereum, or Solana. Backend pending (Q3 2026).' },
+    { name: 'repay', description: 'Record a repayment for an active loan by submitting the on-chain transaction hash. Updates credit score upon confirmation. Backend pending (Q3 2026).' },
+    { name: 'default_oracle', description: 'Query whether a loan has been flagged as defaulted by the Hive credit oracle. Returns boolean. Backend pending (Q3 2026).' },
+  ],
+  extensions: {
+    hive_pricing: {
+      currency: 'USDC',
+      network: 'base',
+      model: 'per_call',
+      first_call_free: true,
+      loyalty_threshold: 6,
+      loyalty_message: 'Every 6th paid call is free',
+    },
+  },
+};
+
+const AP2 = {
+  ap2_version: '1',
+  agent: {
+    name: SERVICE,
+    did: `did:web:${SERVICE}.onrender.com`,
+    description: 'MCP server for HiveCredit — undercollateralized agent credit and lending. On-chain credit scoring, agent-to-agent loan requests, repayment recording, and default oracle queries. USDC settlement on Base L2. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
+  },
+  endpoints: {
+    mcp: `https://${SERVICE}.onrender.com/mcp`,
+    agent_card: `https://${SERVICE}.onrender.com/.well-known/agent-card.json`,
+  },
+  payments: {
+    schemes: ['x402'],
+    primary: {
+      scheme: 'x402',
+      network: 'base',
+      asset: 'USDC',
+      asset_address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+      recipient: '0x15184bf50b3d3f52b60434f8942b7d52f2eb436e',
+    },
+  },
+  brand: { color: '#C08D23', name: 'Hive Civilization' },
+};
+
+app.get('/.well-known/agent-card.json', (req, res) => res.json(AGENT_CARD));
+app.get('/.well-known/ap2.json',         (req, res) => res.json(AP2));
+
+
 app.listen(PORT, () => {
   console.log('HiveCredit MCP Server running on :' + PORT);
   console.log('  Backend : ' + HIVE_BASE);
