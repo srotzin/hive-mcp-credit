@@ -171,6 +171,11 @@ app.get('/.well-known/security.txt', (req, res) => {
 });
 app.get('/seo.json', (req, res) => res.json(seoJson(SERVICE_CFG)));
 
+// ─── Schema constants (auto-injected to fix deploy) ─────
+const SERVICE = 'hive-mcp-credit';
+const VERSION = '1.0.2';
+
+
 // ─── Schema discoverability ────────────────────────────────────────────────
 const AGENT_CARD = {
   name: SERVICE,
