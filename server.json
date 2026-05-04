@@ -1,18 +1,29 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.srotzin/hive-mcp-credit",
+  "description": "On-chain credit scoring and agent-to-agent lending MCP server on Hive Civilization rails.",
   "title": "Hive Credit",
-  "description": "Agent credit issuance and scoring \u2014 programmable credit lines on Base L2",
-  "version": "1.0.0",
-  "websiteUrl": "https://www.hiveagentiq.com",
-  "remotes": [
-    {
-      "url": "https://hive-mcp-credit.onrender.com/mcp",
-      "type": "streamable-http"
-    }
-  ],
+  "websiteUrl": "https://thehiveryiq.com",
   "repository": {
     "url": "https://github.com/srotzin/hive-mcp-credit",
     "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://hive-mcp-gateway.onrender.com/credit/mcp"
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "tool": "hive-release-tool",
+      "version": "1.0.0",
+      "build_info": {
+        "stack": "hive-civilization",
+        "settlement": "USDC on Base",
+        "license": "MIT"
+      }
+    }
   }
 }
